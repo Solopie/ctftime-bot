@@ -1,9 +1,9 @@
 version: "3.9"
 services:
-    template-bot:
+    ctftime-bot:
         build: "."
-        image: template-bot:1.0
-        container_name: template-bot
+        image: ctftime-bot:1.0
+        container_name: ctftime-bot
         volumes:
             - type: bind 
               source: /var/log/bot-test
