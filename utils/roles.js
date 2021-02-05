@@ -32,7 +32,8 @@ const deleteExistingAdminRoleId = guild => {
 };
 
 const checkMemberIsAdmin = (guild, member) => {
-    return (member.hasPermission("ADMINISTRATOR") || (checkAdminRoleExists(guild) && member.roles.cache.some(role => role.id === config.RUNTIME_CONFIG["ADMIN_ROLE_IDS"][guild.id])));
+    // return (member.hasPermission("ADMINISTRATOR") || (checkAdminRoleExists(guild) && member.roles.cache.some(role => role.id === config.RUNTIME_CONFIG["ADMIN_ROLE_IDS"][guild.id])));
+    return (checkAdminRoleExists(guild) && member.roles.cache.some(role => role.id === config.RUNTIME_CONFIG["ADMIN_ROLE_IDS"][guild.id]));
 };
 
 
