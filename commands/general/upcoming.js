@@ -1,12 +1,15 @@
 const Discord = require("discord.js");
 const moment = require("moment")
-const logger = require("../utils/logger")
-const ctftimeApi = require("../utils/ctftime_api")
+const config = require("../../utils/config")
+const logger = require("../../utils/logger")
+const ctftimeApi = require("../../utils/ctftime_api")
 
 
 module.exports = {
     name: "upcoming",
     description: "Check upcoming events for the next week",
+    admin: false,
+    usage: `${config.PREFIX}upcoming [index]`,
     async execute(message, args) {
         const curTime = moment().unix()
         const weekAfter = moment().add(7, "days").unix()

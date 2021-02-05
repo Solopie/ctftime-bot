@@ -1,4 +1,5 @@
 module.exports = {
     ping: require("./ping"),
-    whoami: require("./whoami")
+    whoami: require("./whoami"),
+    upcoming: require("./upcoming")
 };
