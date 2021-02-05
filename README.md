@@ -1,6 +1,6 @@
 # CTFTime Bot
 
-Bot for CTFTime event management. Effort made for MQCybersec
+Bot for CTFTime event management. Effort made for MQCybersec.
 
 ## Features
 
@@ -8,21 +8,32 @@ Bot for CTFTime event management. Effort made for MQCybersec
 
 ## Docker Instructions
 
-**Flags**
+### Using Docker Compose
 
-- Set detached from foreground
-- Set logging path (Unix Path is used. Change if host is windows)
-- Limit memory to 2GBs
-- Set tag for container
+```
+docker-compose up -d
+docker compose up -d
+```
+
+### Without docker compose
 
 ```
 docker build -t <image-name> .
-docker run -d -v /var/log/<create folder for logs>/:/usr/src/app/logs/ -m 2 --name <name for container> <image-name>
+docker run -d -v /var/log/<create folder for logs>/:/usr/src/app/logs/ -m 300m --cpus "0.5" --name <name for container> <image-name>
 
 E.g.
 docker build -t mc-server-bot-image .
 docker run -d -v /var/log/bot-test/:/usr/src/app/logs/ -m 2g --name bot-test bot-test
 ```
+**Flags**
+
+- Set detached from foreground
+- Set bind mount for logging path (Unix Path is used. Change if host is windows)
+- Limit memory to 300MBs and 0.5 cores
+- Set tag for container
+
+*Change memory restrictions for your own requirements*
+
 ## .env file
 
 - PROD_BOT_TOKEN
