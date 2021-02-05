@@ -8,21 +8,30 @@ module.exports = {
     name: "help",
     description: "The help page",
     admin: false,
-    usage: `${config.PREFIX}help`,
+    usage: `${config.PREFIX}help <section>`,
     execute(msg, args) {
-        const helpEmbed = new Discord.MessageEmbed()
-            .setTitle("Commands");
+        if (args.length === 0) {
+            const sectionEmbed = new Discord.MessageEmbed()
+                .setTitle("Help Sections")
+                .setDescription("Please give a section as an argument")
+                .addField("Usage", `${config.PREFIX}help <section>`)
+                .addField("Section", ["general", "admin"].join("\n"))
 
-        for (const [name, command] of Object.entries(generalCommands)) {
-            helpEmbed.addField(name, `${command.description}\nUsage: ${command.usage}`);
-        }
+            msg.channel.send(sectionEmbed)
+        } else {
+            const helpEmbed = new Discord.MessageEmbed()
+                .setTitle("Commands");
 
-        if (roles.checkMemberIsAdmin(msg.guild, msg.member)) {
-            for (const [name, command] of Object.entries(adminCommands)) {
+            for (const [name, command] of Object.entries(generalCommands)) {
                 helpEmbed.addField(name, `${command.description}\nUsage: ${command.usage}`);
             }
-        }
 
-        msg.channel.send(helpEmbed);
+            if (roles.checkMemberIsAdmin(msg.guild, msg.member)) {
+                for (const [name, command] of Object.entries(adminCommands)) {
+                    helpEmbed.addField(name, `${command.description}\nUsage: ${command.usage}`);
+                }
+            }
+            msg.channel.send(helpEmbed);
+        }
     },
 };
