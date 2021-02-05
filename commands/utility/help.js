@@ -14,7 +14,7 @@ module.exports = {
             const sectionEmbed = new Discord.MessageEmbed()
                 .setTitle("Help Sections")
                 .setDescription("Please give a section as an argument")
-                .setField("Usage", `${config.PREFIX}help <section>`)
+                .addField("Usage", `${config.PREFIX}help <section>`)
                 .addField("Section", ["general", "admin"].join("\n"))
 
             msg.channel.send(sectionEmbed)
