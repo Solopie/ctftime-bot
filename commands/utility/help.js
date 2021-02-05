@@ -11,27 +11,41 @@ module.exports = {
     usage: `${config.PREFIX}help <section>`,
     execute(msg, args) {
         if (args.length === 0) {
+            let sections = ["general"];
+            if(roles.checkMemberIsAdmin(msg.guild, msg.member)) {
+                sections.push("admin");
+            }
             const sectionEmbed = new Discord.MessageEmbed()
                 .setTitle("Help Sections")
                 .setDescription("Please give a section as an argument")
                 .addField("Usage", `${config.PREFIX}help <section>`)
-                .addField("Section", ["general", "admin"].join("\n"))
+                .addField("Sections", sections.join("\n"))
 
             msg.channel.send(sectionEmbed)
         } else {
             const helpEmbed = new Discord.MessageEmbed()
                 .setTitle("Commands");
 
-            for (const [name, command] of Object.entries(generalCommands)) {
-                helpEmbed.addField(name, `${command.description}\nUsage: ${command.usage}`);
+            switch(args[0].toLowerCase()) {
+                case "general":
+                    for (const [name, command] of Object.entries(generalCommands)) {
+                        helpEmbed.addField(name, `${command.description}\nUsage: ${command.usage}`);
+                    }
+                    break;
+                case "admin":
+                    if (roles.checkMemberIsAdmin(msg.guild, msg.member)) {
+                        for (const [name, command] of Object.entries(adminCommands)) {
+                            helpEmbed.addField(name, `${command.description}\nUsage: ${command.usage}`);
+                        }
+                    } else {
+                        msg.reply(`You must have the "${config.ADMIN_ROLE_NAME}" role to view admin commands.`)
+                        return;
+                    }
+                    break;
             }
 
-            if (roles.checkMemberIsAdmin(msg.guild, msg.member)) {
-                for (const [name, command] of Object.entries(adminCommands)) {
-                    helpEmbed.addField(name, `${command.description}\nUsage: ${command.usage}`);
-                }
-            }
-            msg.channel.send(helpEmbed);
+
+                        msg.channel.send(helpEmbed);
         }
     },
 };
