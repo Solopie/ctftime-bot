@@ -23,7 +23,7 @@ docker run -d -v /var/log/<create folder for logs>/:/usr/src/app/logs/ -m 300m -
 
 E.g.
 docker build -t mc-server-bot-image .
-docker run -d -v /var/log/bot-test/:/usr/src/app/logs/ -m 2g --name bot-test bot-test
+docker run -d -v /var/log/bot-test/:/usr/src/app/logs/ -m 300m --cpus "0.5" --name bot-test bot-test
 ```
 **Flags**
 
