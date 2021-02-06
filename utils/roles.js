@@ -24,7 +24,7 @@ const checkAdminRoleExists = guild => {
 
 const deleteExistingAdminRoleId = guild => {
     if (checkAdminRoleExists) {
-        delete config.RUNTIME_CONFIG["ADMIN_ROLE_IDS"].guild.id;
+        delete config.RUNTIME_CONFIG["ADMIN_ROLE_IDS"][guild.id];
         logger.info("ROLES", `Admin role ID has been deleted for guild "${guild.name}-${guild.id}"`);
     } else {
         logger.info("ROLES", `The "${guild.name}" guild (ID:${guild.id}) admin role ID did not exist`);
