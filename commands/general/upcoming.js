@@ -23,8 +23,8 @@ module.exports = {
             eventIndex = parseInt(args[0])
         }
 
-        // Check index is NaN (falsy)
-        if (eventIndex != 0 && !eventIndex) {
+        // Check index is NaN (falsy) or less than 0
+        if ((eventIndex != 0 && !eventIndex) || eventIndex < 0) {
             logger.error("COMMAND", "Invalid index given")
             message.reply("Invalid index given")
             return
