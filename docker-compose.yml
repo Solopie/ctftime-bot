@@ -5,9 +5,7 @@ services:
         image: ctftime-bot:1.0
         container_name: ctftime-bot
         volumes:
-            - type: bind 
-              source: /var/log/bot-test
-              target: /usr/src/app/logs
+            - "/var/log/ctftime-bot:/usr/src/app/logs"
         deploy:
             resources:
                 limits:
