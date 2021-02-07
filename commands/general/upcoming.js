@@ -7,15 +7,15 @@ const ctftimeApi = require("../../utils/ctftime_api")
 
 module.exports = {
     name: "upcoming",
-    description: "Check upcoming events for the next week",
+    description: "Check upcoming events",
     admin: false,
     usage: `${config.PREFIX}upcoming [index]`,
     async execute(message, args) {
         const curTime = moment().unix()
-        const weekAfter = moment().add(7, "days").unix()
+        // const weekAfter = moment().add(7, "days").unix()
 
-        // Limit to 3 events occuring in the next week
-        const upcomingEvents = await ctftimeApi.getEvents(curTime, weekAfter, 10)
+        // Limit to 10 upcomning events
+        const upcomingEvents = await ctftimeApi.getEvents(curTime, "", 10)
 
         // Single embed
         let eventIndex = 0
