@@ -17,7 +17,7 @@ for (const [folderName, folderCommands] of Object.entries(commands)) {
 
 client.on("ready", () => {
     logger.info("STARTUP", `Logged in as ${client.user.tag}!`);
-    client.user.setPresence({ activity: { name: "Bot is online!" }, status: "online" });
+    client.user.setPresence({ activity: { name: `"${config.PREFIX}help" to get started!`}, status: "online" });
 
     // Iterate through all guilds and set admin role id if it already exists
     client.guilds.cache.forEach(guild => {
