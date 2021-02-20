@@ -2,7 +2,7 @@ version: "3.9"
 services:
     template-bot:
         build: "."
-        image: template-bot:1.0
+        image: template-bot:latest
         container_name: template-bot
         volumes:
             - type: bind 
