@@ -2,7 +2,7 @@ version: "3"
 services:
     ctftime-bot:
         build: "."
-        image: ctftime-bot:1.0
+        image: ctftime-bot:latest
         container_name: ctftime-bot
         volumes:
             - "/var/log/ctftime-bot:/usr/src/app/logs"
