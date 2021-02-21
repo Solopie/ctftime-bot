@@ -28,6 +28,7 @@ module.exports = {
             msg.channel.send(`"${config.ADMIN_ROLE_NAME}" has been created. Rearrange role position to ensure security is satisfied.`);
         } catch (err) {
             logger.error("COMMAND", "Failed to create role", err);
+            msg.channel.send("Failed to create role. Check logs for more information")
         }
     },
 };
