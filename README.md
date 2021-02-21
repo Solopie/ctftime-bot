@@ -88,4 +88,12 @@ module.exports = {
 };
 ```
 
+## Default Required Bot Permission 
+
+- Send Messages
+- Manage Roles
+    - Create Bot Admin Role
+
 And that's it!
+
+
