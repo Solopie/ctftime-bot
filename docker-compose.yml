@@ -1,13 +1,11 @@
-version: "3.9"
+version: "3"
 services:
     template-bot:
         build: "."
         image: template-bot:latest
         container_name: template-bot
         volumes:
-            - type: bind 
-              source: /var/log/bot-test
-              target: /usr/src/app/logs
+            - "/var/log/ctftime-bot:/usr/src/app/logs"
         deploy:
             resources:
                 limits:
