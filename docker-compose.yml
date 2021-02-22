@@ -5,7 +5,7 @@ services:
         image: template-bot:latest
         container_name: template-bot
         volumes:
-            - "/var/log/ctftime-bot:/usr/src/app/logs"
+            - "/var/log/template-bot:/usr/src/app/logs"
         deploy:
             resources:
                 limits:
