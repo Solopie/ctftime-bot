@@ -41,7 +41,23 @@ client.on("guildDelete", (guild) => {
 client.on("messageCreate", (msg) => {
     if (!msg.content.startsWith(config.PREFIX) || msg.author.bot) return;
 
-    const args = msg.content.slice(config.PREFIX.length).trim().split(/ +/);
+    // Regex to split arguments with quotation marks and spaces - https://stackoverflow.com/a/18647776
+    let myRegexp = /[^\s"]+|"([^"]*)"/gi;
+    let args = [];
+
+    do {
+        //Each call to exec returns the next regex match as an array
+        var match = myRegexp.exec(
+            msg.content.slice(config.PREFIX.length).trim()
+        );
+        if (match != null) {
+            //Index 1 in the array is the captured group if it exists
+            //Index 0 is the matched text, which we use if no captured group exists
+            args.push(match[1] ? match[1] : match[0]);
+        }
+    } while (match != null);
+
+    // const args = msg.content.slice(config.PREFIX.length).trim().split(/ +/);
     const command = args.shift().toLowerCase();
 
     if (!client.commands.has(command)) return;
