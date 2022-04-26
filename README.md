@@ -71,7 +71,7 @@ module.exports = {
     admin: false,
     usage: `${config.PREFIX}example`,
     execute(msg, args) {
-        msg.reply("You executed the example command!");
+        msg.reply({ content: "You executed the example command!", allowedMentions: {repliedUser: true}});
     },
 };
 ```
