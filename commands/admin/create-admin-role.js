@@ -7,9 +7,10 @@ module.exports = {
     admin: true,
     usage: `${config.PREFIX}create-admin-role`,
     async execute(msg, args, client) {
+        let roles = await msg.guild.roles.fetch();
         if (
             msg.guild.id in config.RUNTIME_CONFIG["ADMIN_ROLE_IDS"] &&
-            msg.guild.roles.cache.some(
+            roles.some(
                 (role) =>
                     role.id ===
                     config.RUNTIME_CONFIG["ADMIN_ROLE_IDS"][msg.guild.id]

@@ -2,20 +2,18 @@ const { Permissions } = require("discord.js");
 const config = require("./config");
 const logger = require("./logger");
 
-const setExistingAdminRoleId = (guild) => {
+const setExistingAdminRoleId = async (guild) => {
     logger.info(
         "ROLES",
         `Setting admin role ID in runtime config for guild "${guild.name}-${guild.id}"`
     );
     // Identify the highest role with ADMIN_ROLE_NAME
-
-    // Get an array with all the roles for the guild
-    const guildRoles = guild.roles;
-    // Highest position for ADMIN role
-    const adminRoleHighestPosition = guildRoles.cache.reduce(
+    let guildRoles = await guild.roles.fetch();
+    let adminRoleHighestPosition = { position: -1 };
+    adminRoleHighestPosition = guildRoles.reduce(
         (maxPositionRole, role) =>
             role.name === process.env.ADMIN_ROLE_NAME &&
-            role.position > maxPositionRole.position
+                role.position > maxPositionRole.position
                 ? role
                 : maxPositionRole,
         { position: -1 }

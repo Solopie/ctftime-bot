@@ -15,22 +15,24 @@ for (const [folderName, folderCommands] of Object.entries(commands)) {
     }
 }
 
-client.on("ready", () => {
+client.on("ready", async () => {
     logger.info("STARTUP", `Logged in as ${client.user.tag}!`);
     client.user.setPresence({
         activities: [{ name: `"${config.PREFIX}help" to get started!` }],
         status: "online",
     });
 
-    // Iterate through all guilds and set admin role id if it already exists
-    client.guilds.cache.forEach((guild) => {
-        roles.setExistingAdminRoleId(guild);
-    });
+    let guilds = await client.guilds.fetch();
+    for (let i = 0; i < guilds.size; i++) {
+        let partialGuild = guilds.at(i);
+        let guild = client.guilds.resolve(partialGuild.id)
+        await roles.setExistingAdminRoleId(guild);
+    }
 });
 
-client.on("guildCreate", (guild) => {
+client.on("guildCreate", async (guild) => {
     logger.info("EVENT", `Joined a guild: "${guild.name}-${guild.id}"`);
-    roles.setExistingAdminRoleId(guild);
+    await roles.setExistingAdminRoleId(guild);
 });
 
 client.on("guildDelete", (guild) => {
