@@ -5,6 +5,6 @@ module.exports = {
     admin: true,
     usage: `${config.PREFIX}admin-test`,
     execute(msg, args) {
-        msg.reply("You executed an admin command!");
+        msg.reply({ content: "You executed an admin command!", allowedMentions: { repliedUser: true } });
     },
 };

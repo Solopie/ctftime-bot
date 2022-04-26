@@ -15,22 +15,24 @@ for (const [folderName, folderCommands] of Object.entries(commands)) {
     }
 }
 
-client.on("ready", () => {
+client.on("ready", async () => {
     logger.info("STARTUP", `Logged in as ${client.user.tag}!`);
     client.user.setPresence({
         activities: [{ name: `"${config.PREFIX}help" to get started!` }],
         status: "online",
     });
 
-    // Iterate through all guilds and set admin role id if it already exists
-    client.guilds.cache.forEach((guild) => {
-        roles.setExistingAdminRoleId(guild);
-    });
+    let guilds = await client.guilds.fetch();
+    for (let i = 0; i < guilds.size; i++) {
+        let partialGuild = guilds.at(i);
+        let guild = client.guilds.resolve(partialGuild.id)
+        await roles.setExistingAdminRoleId(guild);
+    }
 });
 
-client.on("guildCreate", (guild) => {
+client.on("guildCreate", async (guild) => {
     logger.info("EVENT", `Joined a guild: "${guild.name}-${guild.id}"`);
-    roles.setExistingAdminRoleId(guild);
+    await roles.setExistingAdminRoleId(guild);
 });
 
 client.on("guildDelete", (guild) => {
@@ -68,11 +70,9 @@ client.on("messageCreate", (msg) => {
     if (!roles.checkMemberIsAdmin(msg.guild, msg.member)) {
         if (config.RUNTIME_CONFIG["MAINTENANCE_STATUS"]) {
             // People who aren't admins can't run commands during maintenance
-            msg.reply("Only admins can run commands during maintenance.");
+            msg.reply({ content: "Only admins can run commands during maintenance.", allowedMentions: { repliedUser: true } });
         } else if (commandObject.admin) {
-            msg.reply(
-                `You must have the "${config.ADMIN_ROLE_NAME}" role to execute admin commands.`
-            );
+            msg.reply({ content: `You must have the "${config.ADMIN_ROLE_NAME}" role to execute admin commands.`, allowedMentions: { repliedUser: true } });
             return;
         }
     }
@@ -86,9 +86,7 @@ client.on("messageCreate", (msg) => {
         commandObject.execute(msg, args, client);
     } catch (error) {
         logger.error("COMMAND", error.message, error);
-        msg.reply(
-            "There was an error trying to execute that command! Please contact an admin"
-        );
+        msg.reply({ content: "There was an error trying to execute that command! Please contact an admin", allowedMentions: { repliedUser: true } });
     }
 });
 

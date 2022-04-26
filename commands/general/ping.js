@@ -6,6 +6,6 @@ module.exports = {
     admin: false,
     usage: `${config.PREFIX}ping`,
     execute(msg, args) {
-        msg.channel.send("Pong.");
+        msg.channel.send({ content: "Pong." });
     },
 };
