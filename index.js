@@ -68,11 +68,9 @@ client.on("messageCreate", (msg) => {
     if (!roles.checkMemberIsAdmin(msg.guild, msg.member)) {
         if (config.RUNTIME_CONFIG["MAINTENANCE_STATUS"]) {
             // People who aren't admins can't run commands during maintenance
-            msg.reply("Only admins can run commands during maintenance.");
+            msg.reply({ content: "Only admins can run commands during maintenance.", allowedMentions: { repliedUser: true } });
         } else if (commandObject.admin) {
-            msg.reply(
-                `You must have the "${config.ADMIN_ROLE_NAME}" role to execute admin commands.`
-            );
+            msg.reply({ content: `You must have the "${config.ADMIN_ROLE_NAME}" role to execute admin commands.`, allowedMentions: { repliedUser: true } });
             return;
         }
     }
@@ -86,9 +84,7 @@ client.on("messageCreate", (msg) => {
         commandObject.execute(msg, args, client);
     } catch (error) {
         logger.error("COMMAND", error.message, error);
-        msg.reply(
-            "There was an error trying to execute that command! Please contact an admin"
-        );
+        msg.reply({ content: "There was an error trying to execute that command! Please contact an admin", allowedMentions: { repliedUser: true } });
     }
 });
 

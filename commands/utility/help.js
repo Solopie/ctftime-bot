@@ -47,9 +47,7 @@ module.exports = {
                             );
                         }
                     } else {
-                        msg.reply(
-                            `You must have the "${config.ADMIN_ROLE_NAME}" role to view admin commands.`
-                        );
+                        msg.reply({ content: `You must have the "${config.ADMIN_ROLE_NAME}" role to view admin commands.`, allowedMentions: { repliedUser: true } });
                         return;
                     }
                     break;
