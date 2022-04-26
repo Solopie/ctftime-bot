@@ -26,14 +26,14 @@ module.exports = {
         // Check index is NaN (falsy) or less than 0
         if ((eventIndex != 0 && !eventIndex) || eventIndex < 0) {
             logger.error("COMMAND", "Invalid index given")
-            message.reply("Invalid index given")
+            message.reply({ content: "Invalid index given", allowedMentions: { repliedUser: true } });
             return
         }
 
         // Check if index doesn't exist
         if (eventIndex >= upcomingEvents.length) {
             logger.error("COMMAND", "Index given is too big")
-            message.reply(`There is only ${upcomingEvents.length} events coming up in the coming 7 days. Please choose an index below ${upcomingEvents.length}.`)
+            message.reply({ content: `There is only ${upcomingEvents.length} events coming up in the coming 7 days. Please choose an index below ${upcomingEvents.length}.`, allowedMentions: { repliedUser: true } });
             return
         }
 
@@ -54,6 +54,6 @@ module.exports = {
             )
 
         logger.info("COMMAND", "Event embed sent")
-        message.channel.send(eventEmbed);
+        message.channel.send({ embeds: [eventEmbed] });
     },
 };
