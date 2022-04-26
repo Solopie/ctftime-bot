@@ -10,6 +10,6 @@ module.exports = {
     execute(msg, args, client) {
         statusMessage.toggleMaintenanceStatus(client.user);
         logger.info("COMMAND", "Maintenance status has been toggled");
-        msg.channel.send("Maintenance status has been toggled");
+        msg.channel.send({ content: "Maintenance status has been toggled" });
     },
 };

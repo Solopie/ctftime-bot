@@ -1,3 +1,3 @@
 module.exports = {
-    help: require("./help")
+    help: require("./help"),
 };
